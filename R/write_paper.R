@@ -9,8 +9,8 @@ library(cowplot)
 source("R/predict_mm.R") # May not be necessary if I use purrr properly
 source("R/safe_coef.R")
 source("R/mutate_cond.R")
-source("manuscript/ms_R/data_lm.R")
-source("manuscript/ms_R/get_slope.R")
+source("data_lm.R")
+source("get_slope.R")
 
 print.plots <- FALSE
 print.deep.cuts <- FALSE
