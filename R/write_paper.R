@@ -42,12 +42,12 @@ source("2018_p_Km_v_depth.R")
 
 
 # Make the plot of respiration rate per cell
-source("manuscript/ms_R/2018_vmax_rel_G.R")
+source("R/2018_vmax_rel_G.R")
 
 # Gene stuff
-source("manuscript/ms_R/2019_07_10_phyla_abundances.R")
+source("R/2019_07_10_phyla_abundances.R")
 
-source("manuscript/ms_R/2018_11_28_Baker_reanalysis.R")
+source("R/2018_11_28_Baker_reanalysis.R")
 
 # print(p_Vmax.cell.norm)
 

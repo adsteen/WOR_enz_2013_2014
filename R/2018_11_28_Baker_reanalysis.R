@@ -11,11 +11,11 @@ library(gridExtra)
 library(scales)
 
 # read the data & group the data
-SRZ <- read_csv("data/genomic_data/Baker_WOR_data_ADS_SRZ.csv") # 22 cols
+SRZ <- read_csv("data/Baker_WOR_data_ADS_SRZ.csv") # 22 cols
 SRZ$depth <- "SRZ"
-SMTZ <- read_csv("data/genomic_data/Baker_WOR_data_ADS_SMTZ.csv")[ , -8]
+SMTZ <- read_csv("data/Baker_WOR_data_ADS_SMTZ.csv")[ , -8]
 SMTZ$depth <- "SMTZ"
-MRZ <- read_csv("data/genomic_data/Baker_WOR_data_ADS_MRZ.csv") # 22 cols
+MRZ <- read_csv("data/Baker_WOR_data_ADS_MRZ.csv") # 22 cols
 MRZ$depth <- "MRZ"
 
 ee <- do.call(rbind, list(SRZ=SRZ, SMTZ=SMTZ, MRZ=MRZ))
@@ -87,7 +87,7 @@ pep_tax$domain[pep_tax$domain == "MCG-6"] <- "Archaea"
 pep_tax$phylum[pep_tax$phylum == "MCG"] <- "Thorarchaeota"
 
 if(save.plots) {
-  write_csv(pep_tax, "manuscript/ms_plots/2018_new/supplemental/raw_annotations.csv")
+  write_csv(pep_tax, "plots/raw_annotations.csv")
 }
 
 # Count the occurrances of each peptidase in each depth zone
@@ -138,7 +138,7 @@ if(print.plots) {
   suppressWarnings(print(p_pep_ID))
 }
 if(save.plots) {
-  ggsave("manuscript/ms_plots/2018_new/Fig_5_peptidase_identities.tiff", p_pep_ID, height=3.5, width=3.5, units="in", dpi=300, compression="lzw", type="cairo")
+  ggsave("plots/Fig_5_peptidase_identities.tiff", p_pep_ID, height=3.5, width=3.5, units="in", dpi=300, compression="lzw", type="cairo")
 }
 # 
 
@@ -150,7 +150,7 @@ if(print.plots) {
 }
 
 if(save.plots) {
-  tiff("manuscript/ms_plots/resubmit/Fig_6ab_v3.tiff", height = 3, width = 7.5, units = "in", res = 600, compression = "lzw", type = "cairo")
+  tiff("plots/Fig_6ab_v3.tiff", height = 3, width = 7.5, units = "in", res = 600, compression = "lzw", type = "cairo")
   print(p_pep_ID, vp = vp6a)
   print(p_phyla, vp = vp6b)
   dev.off()
