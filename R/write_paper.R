@@ -12,7 +12,7 @@ source("R/mutate_cond.R")
 source("R/data_lm.R")
 source("R/get_slope.R")
 
-print.plots <- FALSE
+print.plots <- TRUE
 print.deep.cuts <- FALSE
 save.plots <- FALSE
 
