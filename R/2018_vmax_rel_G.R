@@ -65,8 +65,7 @@ if(print.plots) {
 
 #(kG1 = 0.12 y-1; avg. lifetime = 8 y) accounted for 73.5% of the reactive OC, and the less reactive fraction (kG2 = 0.011 y-1; avg. lifetime = 91 y)
 # From Alperin: kG1 = 0.12 y-1; kG2 = 0.011 y-1
-
-GRR <- read.table("data/model results/GRR.mod", header=FALSE, col.names=c("depth", "G")) 
+GRR <- read.table("data/GRR.mod", header=FALSE, col.names=c("depth", "G")) 
 attr(GRR$G, "units") <- "uM wet sediment per day"
 
 # Convert G to units of umol wet sediment per liter per hour
@@ -100,12 +99,7 @@ pred_grid <- data.frame(depth=seq(from=4.5, to=100, by=0.1))
 G_preds <- data.frame(depth=pred_grid$depth, G.per.hr=predict(G_mod, newdata=pred_grid))
 
 # # Check that my fits worked right. They did.
-# ggplot() + 
-#   geom_line(data=G_preds, aes(x=depth, y=G.per.hr)) + 
-#   geom_point(data=GRR, aes(x=depth, y=G.per.hr))
- # THIS IS ALL F'd UP
 Vmax_and_G <- left_join(x=sum_kinetics, y=G_preds, by = c("quant.depth" = "depth"))
-#Vmax_and_G <- merge(x=sum_Vmax, y=G_preds, by.x="quantDepth", by.y="depth")
 Vmax_and_G <- Vmax_and_G %>%
   mutate(Vmax.rel.G = sum.Vmax / (G.per.hr/1.286/1000), # G per hr needs to be *DIVIDED* by 1000 to go from per liter to per ml
                      Vmax.rel.G.err = sum.Vmax.err / (G.per.hr/1.286/1000)) # Check units
@@ -129,23 +123,6 @@ if(print.plots) {
   print(p_Vmax_rel_G)
 }
 
-# # Error prop for x = ab/c
-# # sigma_x  = x * sqrt((sigma_a / a)^2 + (sigma_b/b)^2 + (sigma_c/c)^2)
-# # Here, cell.norm.G  = G / cells. Sigma_g is 0
-# # sigma_x = cell.norm.G * sqrt((sigma_cells / cells)^2) = cell.norm.g * sigma_cells/cells
-# Vmax_and_G <- mutate(Vmax_and_G, G.per.cell = G.per.hr / cell.ml,
-#                      G.per.cell.err = G.per.cell * cell.ml.sd / cell.ml)
-# 
-# # Figure 2a: respiration rate per cell
-# # Keeping this commented because I havent' thought enough about how to make units equivalent: oxidation rate is uM/L (porewater or sediment volume?); cells are (I guess per ml )
-# # ggplot(Vmax_and_G, aes(x=quant.depth, y = G.per.cell)) + 
-# #   geom_point() + 
-# #   geom_line() + 
-# #   geom_errorbar(aes(ymin = G.per.cell - G.per.cell.err, ymax = G.per.cell + G.per.cell.err)) + 
-# #   scale_x_reverse() + 
-# #   scale_y_log10() +
-# #   coord_flip()
-
 
 ## How much did G decrease from 4.5 to 82.5?
 G_preds$G.rel <- G_preds$G.per.hr / G_preds$G.per.hr[1] # For whatever reason G_preds$G[G_preds$depth==1.5] doesn't work
@@ -162,7 +139,7 @@ if(print.plots) {
 }
 
 if(save.plots) {
-  tiff("manuscript/ms_plots/2018_new/Fig_2_Vmax_cells_G_vs_depth.tiff", height = 2.5, width = 6.875, units= "in", res = 300, compression = "lzw", type = "cairo")
+  tiff("plots/Fig_2_Vmax_cells_G_vs_depth.tiff", height = 2.5, width = 6.875, units= "in", res = 300, compression = "lzw", type = "cairo")
   cowplot::plot_grid(p_Vmax.rel, p_Vmax_cell_norm, p_GRR, p_Vmax_rel_G,
                      labels = "auto", label_fontface = "plain", 
                      label_x = c(0.22, 0.12, 0.12, 0.18), 
@@ -173,7 +150,6 @@ if(save.plots) {
   # grid.arrange(p_Vmax.rel, p_Vmax_cell_norm, p_GRR, p_Vmax_rel_G, nrow=1)
   # dev.off()
 }
-# Try this the cowplot way
-# Try this the cowplot way
+
 theme_set(base_theme)
 

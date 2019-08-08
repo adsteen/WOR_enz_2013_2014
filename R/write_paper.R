@@ -9,8 +9,8 @@ library(cowplot)
 source("R/predict_mm.R") # May not be necessary if I use purrr properly
 source("R/safe_coef.R")
 source("R/mutate_cond.R")
-source("data_lm.R")
-source("get_slope.R")
+source("R/data_lm.R")
+source("R/get_slope.R")
 
 print.plots <- FALSE
 print.deep.cuts <- FALSE
@@ -32,13 +32,13 @@ quant_depth <- data.frame(depth = 1:5, quant.depth = c(1.5, 4.5, 28.5, 58.5, 82.
 ######
 # Read in raw data, calculate kinetics and make Fig 1
 ######
-source("manuscript/ms_R/2018_ms_read_and_fit_data.R")
+source("R/2018_ms_read_and_fit_data.R")
 
 ####
 # Make Km vs depth figure
 ####
 
-source("manuscript/ms_R/2018_p_Km_v_depth.R")
+source("2018_p_Km_v_depth.R")
 
 
 # Make the plot of respiration rate per cell
